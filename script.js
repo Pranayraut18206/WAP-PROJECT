@@ -1,30 +1,38 @@
-const url = "https://api.football-data.org/v4/matches";
+document.getElementById("filter").addEventListener("change", getMatches);
 
-fetch(url, {
-    method: "GET",
-    headers: {
-        "X-Auth-Token": "114917162a8246d490e324cecec484b4"
-    }
-})
-.then(res => res.json())
-.then(data => {
-    const date=document.getElementById("date");
-    date.textContent=`Date: ${data.filters.dateFrom}- ${data.filters.dateTo}`
+function getMatches() {
+    const id = document.getElementById("filter").value;
     const container = document.getElementById("matches");
 
-    data.matches.slice(0, 10).forEach(dat => {
+    if (!id) {
+        alert("Select a league");
+        return;
+    }
 
-        const div = document.createElement("div");
-        div.classList.add("match");
+    fetch(`https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=${id}`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        container.innerHTML = "";
 
-        div.innerHTML = `
-            <h3>${dat.homeTeam.name} vs ${dat.awayTeam.name}</h3>
-            <p>Status: ${dat.status}</p>
-        `;
+        if (!data.events) {
+            container.innerHTML = "<p>No matches available</p>";
+            return;
+        }
 
-        container.appendChild(div);
-    });
-})
-.catch(err => {
-    console.log(err);
-});
+        data.events.slice(0, 10).forEach(match => {
+            const div = document.createElement("div");
+            div.classList.add("match");
+
+            div.innerHTML = `
+                <h3>${match.strHomeTeam} vs ${match.strAwayTeam}</h3>
+                <p>Date: ${match.dateEvent}</p>
+                <p>Time: ${match.strTime}</p>
+            `;
+
+            container.appendChild(div);
+        });
+
+    })
+    .catch(err => console.log(err));
+}

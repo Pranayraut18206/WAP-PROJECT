@@ -18,12 +18,12 @@ The purpose of this project is to:
 
 ## API Used
 
-This project uses the **Football Data API** to fetch match data.
+This project uses the **Sports DB API** to fetch match data.
 
 ### API Endpoint:
 
 ```
-https://api.football-data.org/v4/matches
+https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=${id}
 ```
 
 ---
@@ -43,7 +43,7 @@ https://api.football-data.org/v4/matches
 * HTML
 * CSS
 * JavaScript (Vanilla JS)
-* REST API (Football Data API)
+* REST API (Sports DB API)
 
 ---
 

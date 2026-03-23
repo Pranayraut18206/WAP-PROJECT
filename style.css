@@ -26,3 +26,26 @@ input::placeholder{
     font-style: italic;
     font-family: 'Montserrat',sans-serif;
 }
+
+#filter {
+    margin: 50px;
+    padding: 10px 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+    
+    background-color: antiquewhite;
+    color: #333;
+
+    border: 2px solid #5a2a5a;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 8px rgba(36, 4, 36, 0.3);
+
+    outline: none;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+#filter:hover{
+    border: 5px solid hsl(0, 41%, 28%);
+}
