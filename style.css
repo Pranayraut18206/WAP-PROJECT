@@ -1,0 +1,28 @@
+body{
+    background-color: rgb(94, 86, 150);
+    color: azure;
+
+}
+#logo{
+    margin-top: 15px;
+    margin-left: 40px;
+    height: 120px;
+    width: 120px;
+    box-shadow: 10px 5px 10px rgb(46, 19, 126);
+    border-radius: 10px;
+}
+input{
+    background-color: rgba(255,255,255,0.15);
+    border: 2px rgba(0,0,0,0.2);
+    padding: 8px 15px;
+    border-radius: 25px;
+    box-shadow: 0 0 8px 8px rgb(49, 49, 128);
+    letter-spacing: 1px;
+    margin: 50px auto;
+}
+input::placeholder{
+    color: white;
+    font-size: 15px;
+    font-style: italic;
+    font-family: 'Montserrat',sans-serif;
+}
