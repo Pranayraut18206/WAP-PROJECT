@@ -16,27 +16,36 @@
       "
     >
       <img src="logo.png" id="logo" />
+      <div id="search-bar">
       <input
+        id="player"
         type="text"
-        style="width: 400px; height: 30px"
-        placeholder="Search live scores, player details..."
+        placeholder="Search player details..."
       />
+      <button id="player-search">Search</button>
+      </div>
     </header>
         <h3 style="margin: auto;" id="date"></h3>
+<div id="select">
 <select id="filter">
   <option value="" disabled selected>Select League</option>
-  <option value="4328">Premier League</option>
-  <option value="4335">La Liga</option>
-  <option value="4332">Serie A</option>
-  <option value="4331">Bundesliga</option>
-  <option value="4334">Ligue 1</option>
-  <option value="4480">Champions League</option>
+  <option value="7293">Premier League</option>
+  <option value="7351">La Liga</option>
+  <option value="7286">Serie A</option>
+  <option value="7339">Bundesliga</option>
+  <option value="7335">Ligue 1</option>
+  <option value="7318">Champions League</option>
 
 </select>
+
+<select id="filter2">
+<option value="" disabled selected>Select Teams</option>
+</select>
+</div>
         <div id="matches"></div>
     </body>
 
-    <script src="script.js"></script>
-
+    <script src="script.js" type="module"></script>
+    <script src="player.js" type="module"></script>
   </body>
 </html>
