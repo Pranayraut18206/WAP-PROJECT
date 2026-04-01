@@ -50,7 +50,7 @@ body{
     box-shadow: 0 0 0 2px white;
 }
 
-#filter,#filter2 {
+#filter,#filter2,#filter3 {
     margin: 50px;
     padding: 10px 15px;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -73,19 +73,4 @@ body{
     border: 5px solid hsl(0, 41%, 28%);
 }
 
-.match{
-    color: rgb(243, 241, 237);
-    font-size: 30px;
-    background-color: rgba(255,255,255,0.15);
-    border: 2px rgba(0,0,0,0.2);
-    padding: 20px;
-    margin: 20px auto;
-    width: 80%;
-    border-radius: 10px;
-    box-shadow: 0 0 8px 8px rgb(49, 49, 128);
-    font-family: 'Montserrat',sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+

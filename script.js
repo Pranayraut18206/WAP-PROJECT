@@ -1,221 +1,141 @@
-document.getElementById("filter").addEventListener("change", getMatches);
+const API_KEY = "5e569a29c7346987b41fba00f518e725";
 
-async function getMatches() {
-  const id = document.getElementById("filter").value;
-  const container = document.getElementById("matches");
-  const leagueMap = {
-  "7293": "Premier League",
-  "7351": "La Liga",
-  "7286": "Serie A",
-  "7339": "Bundesliga",
-  "7335": "Ligue 1",
-  "7318": "Champions League"
-};
-  const leagues = {
-  "Premier League": [
-    "Arsenal",
-    "Aston Villa",
-    "Bournemouth",
-    "Brentford",
-    "Brighton & Hove Albion",
-    "Burnley",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Fulham",
-    "Leeds United",
-    "Liverpool",
-    "Manchester City",
-    "Manchester United",
-    "Newcastle United",
-    "Nottingham Forest",
-    "Sunderland",
-    "Tottenham Hotspur",
-    "West Ham United",
-    "Wolverhampton Wanderers"
-  ],
+// correct IDs
+document.getElementById("filter").addEventListener("change", loadTeams);
+document.getElementById("filter2").addEventListener("change", getMatches);
 
-  "La Liga": [
-    "Real Madrid",
-    "Barcelona",
-    "Atletico Madrid",
-    "Athletic Bilbao",
-    "Real Sociedad",
-    "Real Betis",
-    "Villarreal",
-    "Valencia",
-    "Sevilla",
-    "Getafe",
-    "Celta Vigo",
-    "Osasuna",
-    "Mallorca",
-    "Alaves",
-    "Girona",
-    "Rayo Vallecano",
-    "Espanyol",
-    "Levante",
-    "Elche",
-    "Real Oviedo"
-  ],
+async function loadTeams() {
+  const leagueId = document.getElementById("filter").value;
+  const teamSelect = document.getElementById("filter2");
 
-  "Ligue 1": [
-    "Paris Saint-Germain",
-    "Marseille",
-    "Lyon",
-    "Monaco",
-    "Lille",
-    "Rennes",
-    "Nice",
-    "Lens",
-    "Strasbourg",
-    "Nantes",
-    "Montpellier",
-    "Toulouse",
-    "Reims",
-    "Brest",
-    "Clermont Foot",
-    "Lorient",
-    "Metz",
-    "Le Havre"
-  ],
+  if (!leagueId) return;
 
-  "Bundesliga": [
-    "Bayern Munich",
-    "Borussia Dortmund",
-    "RB Leipzig",
-    "Bayer Leverkusen",
-    "Union Berlin",
-    "Eintracht Frankfurt",
-    "Wolfsburg",
-    "Borussia Monchengladbach",
-    "Freiburg",
-    "Mainz",
-    "Augsburg",
-    "Hoffenheim",
-    "Stuttgart",
-    "Werder Bremen",
-    "Bochum",
-    "Heidenheim",
-    "Darmstadt",
-    "Koln"
-  ],
-    "Serie A": [
-    "Inter Milan",
-    "AC Milan",
-    "Juventus",
-    "Napoli",
-    "AS Roma",
-    "Lazio",
-    "Atalanta",
-    "Fiorentina",
-    "Bologna",
-    "Torino",
-    "Genoa",
-    "Sampdoria",
-    "Cagliari",
-    "Udinese",
-    "Sassuolo",
-    "Empoli",
-    "Lecce",
-    "Parma",
-    "Como",
-    "Venezia"
-  ],
-  "Champions League": [
-    "Manchester City",
-    "Arsenal",
-    "Liverpool",
-    "Real Madrid",
-    "Barcelona",
-    "Atletico Madrid",
-    "Bayern Munich",
-    "Borussia Dortmund",
-    "RB Leipzig",
-    "Paris Saint-Germain",
-    "Inter Milan",
-    "AC Milan",
-    "Napoli",
-    "Benfica",
-    "Porto",
-    "PSV Eindhoven",
-    "Celtic",
-    "Ajax"
-  ]
-};
-  if (!id) {
-    alert("Select a league");
-    return;
-  }
-  const team=document.getElementById("filter2")
-  setTimeout(()=>{
-  team.innerHTML=""
-  const leagueName=leagueMap[id]
-  const opt=document.createElement("option");
-  opt.textContent="Select Teams"
-  team.appendChild(opt);
-  for (let val of leagues[leagueName]){
-    const option=document.createElement("option");
-      option.value = val;
-      option.textContent = val;
-      team.appendChild(option);
-  }
-  },500);
-
-  container.innerHTML = "<p>Loading...</p>";
+  teamSelect.innerHTML = "<option>Loading teams...</option>";
 
   try {
-    const url="https://v3.football.api-sports.io/${}"
-    fetch(url, {
-      method: "GET",
+    const url = `https://v3.football.api-sports.io/teams?league=${leagueId}&season=2024`;
+
+    const res = await fetch(url, {
       headers: {
-        "x-apisports-key": "5e569a29c7346987b41fba00f518e725",
+        "x-apisports-key": API_KEY,
       },
     });
+
+    const data = await res.json();
+
+    teamSelect.innerHTML = `<option value="">Select Team</option>`;
+
+    data.response.forEach(item => {
+      const option = document.createElement("option");
+      option.value = item.team.id;
+      option.textContent = item.team.name;
+      teamSelect.appendChild(option);
+    });
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+function matchCreate(match){
+  const container= document.getElementById("matches");
+  let home = match.teams.home;
+  let away = match.teams.away;
+
+  const div = document.createElement("div");
+  div.style.border = "1px solid #ddd";
+  div.style.margin = "16px auto";
+  div.style.padding = "10px";
+  div.style.borderRadius = "10px";
+  div.style.width="80%";
+
+  div.innerHTML = `
+    <div style="display:flex; justify-content:center; align-items:center; gap:10px">
+      <img src="${home.logo}" width="40">
+      <b style="font-size: 25px">${home.name}</b>
+
+      <span>vs</span>
+
+      <b style="font-size: 25px">${away.name}</b>
+      <img src="${away.logo}" width="40">
+    </div>
+
+    <p style="text-align:center; margin:8px;font-size:25px">
+      ${match.goals.home} - ${match.goals.away}
+    </p>
+
+    <p style="text-align:center; font-size:16px;">
+      ${new Date(match.fixture.date).toLocaleString()}
+    </p>
+  `;
+
+    container.appendChild(div);
+}
+
+//  2. Get last matches of selected team
+let allMatches = []; // store globally
+async function getMatches() {
+  const teamId = document.getElementById("filter2").value;
+  const container = document.getElementById("matches");
+
+  if (!teamId) return;
+
+  container.innerHTML = "<p>Loading matches...</p>";
+
+  try {
+    const url = `https://v3.football.api-sports.io/fixtures?team=${teamId}&season=2024`;
+
+    const res = await fetch(url, {
+      headers: {
+        "x-apisports-key": API_KEY,
+      },
+    });
+
+    const data = await res.json();
+    allMatches = data.response;
+
     container.innerHTML = "";
 
-    if (!data.events) {
-      container.innerHTML = "<p>No matches available</p>";
+    if (!allMatches.length) {
+      container.innerHTML = "<p>No matches found</p>";
       return;
     }
 
-    for (let match of data.events.slice(0, 10)) {
-      const homeRes = await fetch(
-        `https://www.thesportsdb.com/api/v1/json/3/lookupteam.php?id=${match.idHomeTeam}`,
-      );
-      const awayRes = await fetch(
-        `https://www.thesportsdb.com/api/v1/json/3/lookupteam.php?id=${match.idAwayTeam}`,
-      );
+    renderMatches(allMatches);
 
-      const homeData = await homeRes.json();
-      const awayData = await awayRes.json();
-
-      const homeBadge = homeData.teams?.[0]?.strTeamBadge;
-      const awayBadge = awayData.teams?.[0]?.strTeamBadge;
-
-      const div = document.createElement("div");
-      div.classList.add("match");
-
-      div.innerHTML = `
-                <h3 style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                    
-                    <img src="${homeBadge}" style="width:35px; height:35px;">
-                    <span>${match.strHomeTeam}</span>
-
-                    <span>vs</span>
-
-                    <img src="${awayBadge}" style="width:35px; height:35px;">
-                    <span>${match.strAwayTeam}</span>
-
-                </h3>
-
-                <p style="text-align:center;">📅 ${match.dateEvent}</p>
-                <p style="text-align:center;">⏰ ${match.strTime}</p>
-            `;
-
-      container.appendChild(div);
-    }
   } catch (err) {
-    console.log(err);
+    console.error(err);
     container.innerHTML = "<p>Error loading matches</p>";
   }
 }
+// render function
+function renderMatches(matches) {
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
+  matches.forEach(match => matchCreate(match, container));
+}
+
+// filter logic
+document.getElementById("filter3").addEventListener("change", () => {
+  const result = document.getElementById("filter3").value;
+  const teamId = document.getElementById("filter2").value;
+
+  let filtered = allMatches.filter(match => {
+    let homeScore, awayScore;
+
+    if (match.teams.home.id == teamId) {
+      homeScore = match.goals.home;
+      awayScore = match.goals.away;
+    } else {
+      homeScore = match.goals.away;
+      awayScore = match.goals.home;
+    }
+
+    if (result === "all") return true;
+
+    if (homeScore === awayScore) return result === "draw";
+    if (homeScore > awayScore) return result === "win";
+    return result === "loss";
+  });
+
+  renderMatches(filtered);
+});
