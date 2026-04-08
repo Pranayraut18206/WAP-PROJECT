@@ -1,57 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-        <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header
-      style="
-        background-color: rgb(59, 59, 165);
-        display: flex;
-        flex-direction: row;
-        height: 150px;
-      "
-    >
-      <img src="logo.png" id="logo" />
-      <div id="search-bar">
-      <input
-        id="player"
-        type="text"
-        placeholder="Search player details..."
-      />
-      <button id="player-search">Search</button>
-      </div>
-    </header>
-        <h3 style="margin: auto;" id="date"></h3>
-<div id="select">
-<select id="filter">
-  <option value="" disabled selected>Select League</option>
-  <option value="39">Premier League</option>
-  <option value="140">La Liga</option>
-  <option value="135">Serie A</option>
-  <option value="78">Bundesliga</option>
-  <option value="61">Ligue 1</option>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Football Scores</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="body-dark">
 
-</select>
-
-<select id="filter2">
-<option value="" disabled selected>Select Teams</option>
-</select>
-<select id="filter3">
-<option value="" disabled selected>Choose</option>
-<option value="all">All</option>
-<option value="win">Win</option>
-<option value="loss">Loss</option>
-<option value="draw">Draw</option>
-</select>
-</div>
-<div id="matches"></div>
-
-
-    <script src="script.js" type="module"></script>
-    <script src="player.js" type="module"></script>
-  </body>
+  <header>
+    <h1><img src="logo.png" class="logo">Score Stats</h1>
+    <div id="feature">
+    <button id="matches">Matches</button>
+    <button id="players">Players</button>
+    </div>
+    <button id="back-mode" class="dark">Dark Mode</button>
+  </header>
+  <div id="content"></div>
+  <script src="script.js" type="module"></script>
+</body>
 </html>

@@ -42,7 +42,7 @@ https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=${id}
 
 * HTML
 * CSS
-* JavaScript (Vanilla JS)
+* JavaScript
 * REST API (Sports DB API)
 
 ---
